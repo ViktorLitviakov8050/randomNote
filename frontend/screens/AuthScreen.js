@@ -14,10 +14,10 @@ export default function AuthScreen() {
     <View style={styles.container}>
       <Text style={styles.text}>Random note for today!</Text>
       <TextInput value={email}
-        placeholder="useless placeholder"
+        placeholder="email"
         onChangeText={setEmail}></TextInput>
       <TextInput value={password}
-        placeholder="useless placeholder"
+        placeholder="password"
         onChangeText={setPassword}
         secureTextEntry></TextInput>
 
