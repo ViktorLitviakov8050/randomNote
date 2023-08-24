@@ -47,6 +47,7 @@ const styles = StyleSheet.create({
     buttons_container: {
         flexDirection: 'row',
         paddingBottom: 10,
+        width: '100%'
 
     }
 })
