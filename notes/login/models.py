@@ -3,10 +3,11 @@ from django.db import models
 # Create your models here.
 
 from django.db import models
+from uuid import uuid4
 
 
 class User(models.Model):
-    email = models.CharField(max_length=30)
+    email = models.EmailField(unique=True)
     password = models.CharField(max_length=30)
-    token = models.CharField(max_length=100)
+    token = models.UUIDField(unique=True, default=uuid4)
     created = models.DateTimeField(auto_now_add=True)

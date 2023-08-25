@@ -18,7 +18,9 @@ def auth(request):
                 user = User.objects.get(email=email)
             except User.DoesNotExist:
                 user = User(email=email, password=password)
-            return JsonResponse({'token':'qewreqwreq'})
+                user.save()
+
+            return JsonResponse({'token':user.token})
 
         raise BadRequest('Invalid email or password.')
    
