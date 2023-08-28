@@ -1,28 +1,21 @@
-from django.shortcuts import render
-from django.http import HttpResponse
-from django.views.decorators.csrf import csrf_exempt
+from rest_framework import views
 from .models import User 
 from django.http import JsonResponse
-from django.core.exceptions import BadRequest
+from django.db import IntegrityError
 
 
-@csrf_exempt 
-def auth(request):
-    if request.method == "GET":
-        return HttpResponse("Enter email and pass")    
-    elif request.method == "POST":
+
+class AuthView(views.APIView):
+    def post(self, request):
         email = request.POST.get("email")
         password = request.POST.get("password")
-        if email and password:
+        try:
+            user = User.objects.get(email=email, password=password)
+        except User.DoesNotExist:
+            user = User(email=email, password=password)
             try:
-                user = User.objects.get(email=email)
-            except User.DoesNotExist:
-                user = User(email=email, password=password)
                 user.save()
 
-            return JsonResponse({'token':user.token})
-
-        raise BadRequest('Invalid email or password.')
-   
-
-
+            except IntegrityError:
+                return JsonResponse({"error:": "Invalid password"}, status=400)
+        return JsonResponse({'token':user.token})
