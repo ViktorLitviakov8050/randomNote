@@ -2,14 +2,15 @@ from rest_framework import views
 from .models import User 
 from django.http import JsonResponse
 from django.db import IntegrityError
-from .cryptogtapher import Cryptographer
+from .cryptographer import Cryptographer
+from django.conf import settings
 
 
 class AuthView(views.APIView):
     def post(self, request):
         email = request.POST.get("email")
         password = request.POST.get("password")
-        key = b'kpzky_nk07lDWu-PR6hYn6IrLuAGsOCfg8a1ngDCjDo='
+        key = settings.SECRET_KEY
         encrypted_pass = Cryptographer(key).encrypt(password)
         try:
             user = User.objects.get(email=email, password=encrypted_pass)
