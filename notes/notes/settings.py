@@ -127,7 +127,4 @@ STATIC_URL = 'static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 load_dotenv()
-SECRET_KEY = os.getenv("KEY").encode()  
-
-
-
+SECRET_KEY = os.getenv("KEY").encode()
