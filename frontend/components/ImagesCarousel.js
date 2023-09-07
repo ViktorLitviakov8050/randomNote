@@ -1,19 +1,19 @@
 import Carousel from 'react-native-reanimated-carousel';
-import {View, Dimensions} from 'react-native'
+import { View, Dimensions } from 'react-native'
 
 
 function ImagesCarousel({ data }) {
-    const width = Dimensions.get('window').width;
+    const { width, height } = Dimensions.get('window');
+
     return (
         <View style={{ flex: 1 }}>
             <Carousel
                 loop
                 width={width}
-                height={width / 2}
+                height={height / 3}
                 autoPlay={true}
                 data={data}
                 scrollAnimationDuration={1000}
-                onSnapToItem={(index) => console.log('current index:', index)}
                 renderItem={({ item }) => (
                     <View
                         style={{
