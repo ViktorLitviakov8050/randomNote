@@ -16,5 +16,3 @@ class Cryptographer:
         decoded_password = decrypted_password.decode()
 
         return decoded_password
- 
-        

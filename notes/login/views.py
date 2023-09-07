@@ -2,7 +2,7 @@ from rest_framework import views
 from .models import User 
 from django.http import JsonResponse
 from django.db import IntegrityError
-from .cryptographer import Cryptographer
+from notes.cryptographer import Cryptographer
 from django.conf import settings
 
 
