@@ -6,7 +6,7 @@ class Label(models.Model):
 class Attachment(models.Model):
     file_path = models.TextField()
     mime_type = models.TextField()
-    note =  models.ForeignKey('Note', on_delete=models.CASCADE,related_name='attachments')
+    note =  models.ForeignKey('Note', on_delete=models.CASCADE, related_name='attachments')
 
 class Note(models.Model):
     textContent = models.TextField(null=True)
