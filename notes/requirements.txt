@@ -2,3 +2,5 @@ django
 djangorestframework 
 cryptography
 python-dotenv
+gkeepapi
+urllib3 <= 2.0
