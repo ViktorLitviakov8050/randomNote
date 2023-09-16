@@ -4,7 +4,7 @@ os.environ.setdefault("DJANGO_SETTINGS_MODULE", "notes.settings")
 import django
 django.setup()
 
-from models import Note, Attachment, Label
+from randomNote.models import Note, Attachment, Label
 import os
 import glob
 import json
@@ -31,6 +31,11 @@ print()
 extension = '*.json'
 files_dir = os.path.join(folder_with_extracted_files, folder_to_extract_files_from)
 file_paths = glob.glob(os.path.join(files_dir, extension))
+
+models_to_reset = [Note, Attachment, Label]
+print("Resetting notes, labels and attachments")
+for model in models_to_reset:
+    model.objects.all().delete()
 
 print('Loading')
 for filename in file_paths:
