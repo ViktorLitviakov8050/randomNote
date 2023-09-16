@@ -1,6 +1,5 @@
 from django.db import models
-from helpers import camel_snake_case
-import datetime
+from helpers import camel_snake_case, convert_time_from_usec_to_timezoned_utc
 
 class JSONSourceable:
     def __repr__(self):
@@ -47,14 +46,20 @@ class Note(models.Model, JSONSourceable):
     @classmethod
     def from_dict(cls, dictionary):
         note = super().from_dict(dictionary)
-        note.created_time = datetime.datetime.utcfromtimestamp(dictionary['createdTimestampUsec']/1000000)
-        note.edited_time = datetime.datetime.utcfromtimestamp(dictionary['userEditedTimestampUsec']/1000000)
+        note.created_time = convert_time_from_usec_to_timezoned_utc(dictionary['createdTimestampUsec'])
+        note.edited_time = convert_time_from_usec_to_timezoned_utc(dictionary['userEditedTimestampUsec'])
+
+        note.save()
 
         if 'attachments' in dictionary:
-            for attachment in dictionary['attachments']:
-                note.attachments.append(Attachment.from_dict(attachment))
+            for attachment_raw in dictionary['attachments']:
+                attachment = Attachment.from_dict(attachment_raw)
+                attachment.note = note
+                attachment.save()
 
         if 'labels' in dictionary:
-            for label in dictionary['labels']:
-                note.labels.append(Label.from_dict(label))
+            for label_raw in dictionary['labels']:
+                label = Label.from_dict(label_raw)
+                label.save()
+                note.labels.add(label)
         return note
