@@ -16,7 +16,7 @@ if len(sys.argv) < 2:
     raise Exception('Zip file path is not provided')
 zip_file_path = sys.argv[1]
 
-folder_to_extract_files_from = 'Takeout/Keep'
+folder_to_extract_files_from = 'Keep'
 folder_with_extracted_files = os.path.join(os.getcwd())
 
 print("Extracting")
