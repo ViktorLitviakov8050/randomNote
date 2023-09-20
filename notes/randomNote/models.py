@@ -1,5 +1,6 @@
 from django.db import models
-from helpers import camel_snake_case, convert_time_from_usec_to_timezoned_utc
+from helpers import camel_snake_case, convert_time_from_usec_to_timezoned_utc, copy_file
+from random import choice
 
 class JSONSourceable:
     def __repr__(self):
@@ -34,6 +35,12 @@ class Note(models.Model, JSONSourceable):
     is_archived = models.BooleanField(default=False)
     labels = models.ManyToManyField(Label)
 
+    @classmethod
+    def random_note(cls):
+        id_array = cls.objects.values_list('id', flat=True)
+        random_id = choice(id_array)
+        return cls.objects.get(id=random_id)
+
     # MANY to MANY
     # note.labels | note has many labels
     # label.notes | label has many notes
@@ -56,6 +63,8 @@ class Note(models.Model, JSONSourceable):
                 attachment = Attachment.from_dict(attachment_raw)
                 attachment.note = note
                 attachment.save()
+                copy_file(f"Keep/{attachment.file_path}",f"Attachments/{attachment.file_path}")
+
 
         if 'labels' in dictionary:
             for label_raw in dictionary['labels']:
