@@ -10,15 +10,7 @@ import django
 import os
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "notes.settings")
 
-import django
 django.setup()
-
-from randomNote.models import Note, Attachment, Label
-import os
-import glob
-import json
-import zipfile
-import sys
 
 
 if len(sys.argv) < 2:
@@ -35,7 +27,7 @@ with zipfile.ZipFile(zip_file_path, 'r') as zip_ref:
         if item.startswith(folder_to_extract_files_from + '/'):
             zip_ref.extract(item, folder_with_extracted_files)
             print(".", end="")
-            
+
 print()
 extension = '*.json'
 files_dir = os.path.join(folder_with_extracted_files,
@@ -57,3 +49,6 @@ for filename in file_paths:
 print()
 
 
+extracted_temporary_folder_path = Path(
+    settings.NOTES_SOURCE_DIR).resolve().parent
+shutil.rmtree(extracted_temporary_folder_path)
