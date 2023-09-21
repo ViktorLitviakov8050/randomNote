@@ -5,12 +5,13 @@ import sys
 import zipfile
 import json
 import glob
-from randomNote.models import Note, Attachment, Label
 import django
 import os
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "notes.settings")
 
 django.setup()
+
+from randomNote.models import Note, Attachment, Label
 
 
 if len(sys.argv) < 2:
