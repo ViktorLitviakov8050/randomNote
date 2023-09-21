@@ -1,3 +1,12 @@
+import shutil
+from pathlib import Path
+from django.conf import settings
+import sys
+import zipfile
+import json
+import glob
+from randomNote.models import Note, Attachment, Label
+import django
 import os
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "notes.settings")
 
@@ -16,8 +25,8 @@ if len(sys.argv) < 2:
     raise Exception('Zip file path is not provided')
 zip_file_path = sys.argv[1]
 
-folder_to_extract_files_from = 'Keep'
-folder_with_extracted_files = os.path.join(os.getcwd())
+folder_to_extract_files_from = settings.NOTES_SOURCE_DIR
+folder_with_extracted_files = settings.BASE_DIR
 
 print("Extracting")
 with zipfile.ZipFile(zip_file_path, 'r') as zip_ref:
@@ -29,7 +38,8 @@ with zipfile.ZipFile(zip_file_path, 'r') as zip_ref:
             
 print()
 extension = '*.json'
-files_dir = os.path.join(folder_with_extracted_files, folder_to_extract_files_from)
+files_dir = os.path.join(folder_with_extracted_files,
+                         folder_to_extract_files_from)
 file_paths = glob.glob(os.path.join(files_dir, extension))
 
 models_to_reset = [Note, Attachment, Label]
@@ -39,9 +49,11 @@ for model in models_to_reset:
 
 print('Loading')
 for filename in file_paths:
-   with open(filename) as file:
+    with open(filename) as file:
         note_json = json.load(file)
         Note.from_dict(note_json).save()
         print(".", end="")
 
 print()
+
+
