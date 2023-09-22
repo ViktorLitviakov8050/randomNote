@@ -5,7 +5,7 @@ from django.http import JsonResponse
 from uuid import UUID
 from notes.cryptographer import Cryptographer
 from django.conf import settings
-
+from .serializers import NoteSerializer
 
 class GetRandomNoteView(views.APIView):
     def get(self, request):
@@ -18,4 +18,6 @@ class GetRandomNoteView(views.APIView):
         key = settings.SECRET_KEY
         decrypt_pass = Cryptographer(key).decrypt(user.password)
         randomnote = Note.random_note()
-        return JsonResponse({'noteTitle': randomnote.title})
+        serializer = NoteSerializer(randomnote)
+        print(serializer.data)
+        return JsonResponse(serializer.data)
