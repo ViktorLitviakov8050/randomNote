@@ -70,8 +70,7 @@ class Note(models.Model, JSONSourceable):
                 attachment = Attachment.from_dict(attachment_raw)
                 attachment.note = note
                 attachment.save()
-                copy_file(f"{settings.NOTES_SOURCE_DIR}/{attachment.file_path}",
-                          f"{settings.ATTACHMENTS_DIR}/{attachment.file_path}")
+
 
         if 'labels' in dictionary:
             for label_raw in dictionary['labels']:
