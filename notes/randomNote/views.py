@@ -9,14 +9,6 @@ from .serializers import NoteSerializer
 
 class GetRandomNoteView(views.APIView):
     def get(self, request):
-        token = request.META.get('HTTP_AUTHORIZATION')
-        try:
-            token = UUID(token.replace('Bearer ' , ''))
-            user = User.objects.get(token=token)
-        except (ValueError, User.DoesNotExist):
-            return JsonResponse({"error:": "Invalid token"}, status=401)
-        key = settings.SECRET_KEY
-        decrypt_pass = Cryptographer(key).decrypt(user.password)
         randomnote = Note.random_note()
         serializer = NoteSerializer(randomnote)
         return JsonResponse(serializer.data)
