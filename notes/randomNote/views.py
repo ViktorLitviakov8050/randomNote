@@ -19,5 +19,4 @@ class GetRandomNoteView(views.APIView):
         decrypt_pass = Cryptographer(key).decrypt(user.password)
         randomnote = Note.random_note()
         serializer = NoteSerializer(randomnote)
-        print(serializer.data)
         return JsonResponse(serializer.data)
