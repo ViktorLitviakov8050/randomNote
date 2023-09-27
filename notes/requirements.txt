@@ -4,3 +4,4 @@ cryptography
 python-dotenv
 gkeepapi
 urllib3 <= 2.0
+django-cors-headers
