@@ -21,7 +21,7 @@ class JSONSourceable:
 class Label(models.Model, JSONSourceable):
     accepted_json_attributes = ['name']
 
-    name = models.TextField()
+    name = models.TextField(unique=True)
 
 
 class Attachment(models.Model, JSONSourceable):
@@ -74,7 +74,10 @@ class Note(models.Model, JSONSourceable):
 
         if 'labels' in dictionary:
             for label_raw in dictionary['labels']:
-                label = Label.from_dict(label_raw)
-                label.save()
+                try:
+                    label = Label.objects.get(name=label_raw["name"])
+                except Label.DoesNotExist:
+                    label = Label.from_dict(label_raw)
+                    label.save()
                 note.labels.add(label)
         return note
