@@ -16,18 +16,35 @@ const getRandomNote = async (callback) => {
         }
     };
 
+const getImages = async (callback, id) => {
+    try {
+        const response = await fetch(
+            `http://127.0.0.1:8000/notes/getimages/${id}`,
+            );
+            const json = await response.json();
+            callback(json.images);
+        } catch (error) {
+            console.error(error);
+        }
+    };
+
 const MainScreen = () => {
     const [note, setNote] = useState({})
+    const [images, setImages] = useState([])
+
     useEffect(() => {
-            getRandomNote(setNote)
+            getRandomNote((json) => {
+                setNote(json);
+                getImages(setImages, json.id)})
         },[]);
-        
-    const images = note.images?.map((imageURL) => {
+    
+    
+    const imagesList = images?.map((image) => {
         return (
             <Image
-                key={imageURL}
+                key={image}
                 style={{ height: 300, width: 500 }}
-                source={{ uri: imageURL }}
+                source={{ uri: `data:image/png;base64,${image}` }} 
                 resizeMode='center'
             />
         )
@@ -45,7 +62,7 @@ const MainScreen = () => {
                 <Text style={styles.noteText}>{note.title}</Text>
                 <Text style={styles.noteText}>{note.text_content}</Text>
                 {labels?.map(label=>label)}
-                <ImagesCarousel data={images} />
+                <ImagesCarousel data={imagesList} />
             </ScrollView>
             <View style={styles.buttons_container}>
                 <Button color='green' title="Next" onPress={() => getRandomNote(setNote)} />
