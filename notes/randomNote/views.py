@@ -1,10 +1,11 @@
 from rest_framework import views
 from login.models import User 
+from .models import Note 
 from django.http import JsonResponse
 from uuid import UUID
 from notes.cryptographer import Cryptographer
 from django.conf import settings
-
+from .serializers import NoteSerializer
 
 class GetRandomNoteView(views.APIView):
     def get(self, request):
@@ -16,5 +17,6 @@ class GetRandomNoteView(views.APIView):
             return JsonResponse({"error:": "Invalid token"}, status=401)
         key = settings.SECRET_KEY
         decrypt_pass = Cryptographer(key).decrypt(user.password)
-
-        return JsonResponse({"note": "randomnote"})
+        randomnote = Note.random_note()
+        serializer = NoteSerializer(randomnote)
+        return JsonResponse(serializer.data)
