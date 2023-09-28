@@ -9,7 +9,7 @@ export default function App() {
   return (
     <SafeAreaView style={styles.app}>
       <View style={styles.container}>
-        <Text style={styles.header}>RandomNote</Text>
+        <Text style={styles.header}>---</Text>
         {/* <AuthScreen /> */}
         <MainScreen />
       </View>
