@@ -1,5 +1,5 @@
 from rest_framework import views
-from .models import Note, Attachment 
+from .models import Note, Attachment
 from django.http import JsonResponse
 from django.conf import settings
 from .serializers import NoteSerializer
