@@ -7,7 +7,7 @@ import Button from '../components/Button'
 const getRandomNote = async (callback) => {
     try {
         const response = await fetch(
-            'http://127.0.0.1:8000/notes/getrandomnote',
+            'http://192.168.1.91:8000/notes/getrandomnote',
             );
             const json = await response.json();
             callback(json);
@@ -19,7 +19,7 @@ const getRandomNote = async (callback) => {
 const getImages = async (callback, id) => {
     try {
         const response = await fetch(
-            `http://127.0.0.1:8000/notes/getimages/${id}`,
+            `http://192.168.1.91:8000/notes/getimages/${id}`,
             );
             const json = await response.json();
             callback(json.images);

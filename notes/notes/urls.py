@@ -16,9 +16,12 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+from randomNote.views import GetRandomNoteView
+
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('auth/', include('login.urls')),
     path('notes/', include('randomNote.urls')),
+    path('', GetRandomNoteView.as_view())
 ]
