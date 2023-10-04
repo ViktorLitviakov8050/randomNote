@@ -47,14 +47,12 @@ class Note(models.Model, JSONSourceable):
     created_time = models.DateTimeField(null=True)
     is_archived = models.BooleanField(default=False)
     labels = models.ManyToManyField(Label)
-    
 
     @classmethod
     def random_note(cls):
         id_array = cls.objects.values_list('id', flat=True)
         random_id = choice(id_array)
         return cls.objects.get(id=random_id)
-
 
     @classmethod
     def from_dict(cls, dictionary):
@@ -71,13 +69,12 @@ class Note(models.Model, JSONSourceable):
                 attachment = Attachment.from_dict(attachment_raw)
                 attachment.note = note
                 attachment.save()
-        
+
         if 'listContent' in dictionary:
             for list_item_raw in dictionary['listContent']:
                 list_item = ListItem.from_dict(list_item_raw)
                 list_item.note = note
                 list_item.save()
-
 
         if 'labels' in dictionary:
             for label_raw in dictionary['labels']:
