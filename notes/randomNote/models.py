@@ -20,7 +20,6 @@ class JSONSourceable:
 
 class Label(models.Model, JSONSourceable):
     accepted_json_attributes = ['name']
-
     name = models.TextField(unique=True)
 
 
@@ -30,6 +29,14 @@ class Attachment(models.Model, JSONSourceable):
     mime_type = models.TextField()
     note = models.ForeignKey(
         'Note', on_delete=models.CASCADE, related_name='attachments')
+
+
+class ListItem(models.Model, JSONSourceable):
+    accepted_json_attributes = ['text', 'isChecked']
+    text = models.TextField()
+    is_checked = models.BooleanField(default=False)
+    note = models.ForeignKey(
+        'Note', on_delete=models.CASCADE, related_name='list_items')
 
 
 class Note(models.Model, JSONSourceable):
@@ -47,14 +54,6 @@ class Note(models.Model, JSONSourceable):
         random_id = choice(id_array)
         return cls.objects.get(id=random_id)
 
-    # MANY to MANY
-    # note.labels | note has many labels
-    # label.notes | label has many notes
-
-    # ONE to MANY
-    # note.attachments | note has many attachments
-    # attachment.note  | attachment has one(!) note
-
     @classmethod
     def from_dict(cls, dictionary):
         note = super().from_dict(dictionary)
@@ -71,6 +70,11 @@ class Note(models.Model, JSONSourceable):
                 attachment.note = note
                 attachment.save()
 
+        if 'listContent' in dictionary:
+            for list_item_raw in dictionary['listContent']:
+                list_item = ListItem.from_dict(list_item_raw)
+                list_item.note = note
+                list_item.save()
 
         if 'labels' in dictionary:
             for label_raw in dictionary['labels']:
