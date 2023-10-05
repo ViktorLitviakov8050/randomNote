@@ -1,6 +1,5 @@
 import { View, Text, Image, Dimensions, StyleSheet, Pressable, ScrollView } from 'react-native'
 import React, {useEffect, useState} from 'react'
-import note from '../mocks/note'
 import ImagesCarousel from '../components/ImagesCarousel'
 import Button from '../components/Button'
 
