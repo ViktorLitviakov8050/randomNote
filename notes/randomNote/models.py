@@ -41,8 +41,8 @@ class ListItem(models.Model, JSONSourceable):
 
 class Note(models.Model, JSONSourceable):
     accepted_json_attributes = ['textContent', 'title', 'isArchived']
-    text_content = models.TextField(null=True)
-    title = models.TextField(null=True)
+    text_content = models.TextField(null=True, default="")
+    title = models.TextField(null=True, default="")
     edited_time = models.DateTimeField(null=True)
     created_time = models.DateTimeField(null=True)
     is_archived = models.BooleanField(default=False)
