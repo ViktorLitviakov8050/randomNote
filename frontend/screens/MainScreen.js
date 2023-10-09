@@ -1,68 +1,38 @@
-import { View, Text, Image, Dimensions, StyleSheet, Pressable, ScrollView } from 'react-native'
-import React, {useEffect, useState} from 'react'
-import ImagesCarousel from '../components/ImagesCarousel'
+import { View, StyleSheet } from 'react-native'
+import React, { useEffect, useState } from 'react'
 import Button from '../components/Button'
+import Note from '../components/Note'
+
 
 const getRandomNote = async (callback) => {
     try {
         const response = await fetch(
             'http://192.168.1.91:8000/notes/getrandomnote',
-            );
-            const json = await response.json();
-            callback(json);
-        } catch (error) {
-            console.error(error);
-        }
-    };
+        );
+        const json = await response.json();
+        callback(json);
+    } catch (error) {
+        console.error(error);
+    }
+};
 
-const getImages = async (callback, id) => {
-    try {
-        const response = await fetch(
-            `http://192.168.1.91:8000/notes/getimages/${id}`,
-            );
-            const json = await response.json();
-            callback(json.images);
-        } catch (error) {
-            console.error(error);
-        }
-    };
 
-const MainScreen = () => {
-    const [note, setNote] = useState({})
-    const [images, setImages] = useState([])
+
+const MainScreen = ({note:note_from_notification}) => {
+    const [note, setNote] = useState(note_from_notification)
 
     useEffect(() => {
+        if (!note_from_notification)
             getRandomNote((json) => {
                 setNote(json);
-                getImages(setImages, json.id)})
-        },[]);
-    
-    
-    const imagesList = images?.map((image) => {
-        return (
-            <Image
-                key={image}
-                style={{ height: 300, width: 500 }}
-                source={{ uri: `data:image/png;base64,${image}` }} 
-                resizeMode='center'
-            />
-        )
-    })
-    const labels = note.labels?.map((label) => {
-        return (
-            <Text
-                key={label.name}
-            >{label.name}</Text>
-        )
-    })
+            })
+    }, []);
+
+
+
     return (
         <View style={styles.container}>
-            <ScrollView contentContainerStyle={styles.scrollable_container}>
-                <Text style={styles.noteText}>{note.title}</Text>
-                <Text style={styles.noteText}>{note.text_content}</Text>
-                {labels?.map(label=>label)}
-                <ImagesCarousel data={imagesList} />
-            </ScrollView>
+            <Note data={note_from_notification} />
             <View style={styles.buttons_container}>
                 <Button color='green' title="Next" onPress={() => getRandomNote(setNote)} />
             </View>
@@ -76,20 +46,12 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'space-between'
     },
-    scrollable_container: {
-        marginBottom: 30
-    },
-    noteText: {
-        textAlign: 'center',
-        padding: 20,
-        fontSize: 20
-    },
     buttons_container: {
         flexDirection: 'row',
         paddingBottom: 10,
         width: '100%'
+    },
 
-    }
 })
 
 export default MainScreen
