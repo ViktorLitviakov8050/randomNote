@@ -46,7 +46,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'login',
     'randomNote',
-    'corsheaders'
+    'corsheaders',
+    'drf_spectacular'
 ]
 
 MIDDLEWARE = [
@@ -139,3 +140,11 @@ SECRET_KEY = os.getenv("KEY").encode()
 CORS_ALLOWED_ORIGINS = [
     'http://localhost:19006',
 ]
+
+REST_FRAMEWORK = {
+    'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema'
+}
+
+SPECTACULAR_SETTINGS = {
+    'TITLE': 'RandomNote API Docs'
+}
