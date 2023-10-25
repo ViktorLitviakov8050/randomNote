@@ -2,6 +2,7 @@ import { View, StyleSheet } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import Button from '../components/Button'
 import Note from '../components/Note'
+import useNotificationNote from '../components/useNotificationNote';
 
 
 const getRandomNote = async (callback) => {
@@ -18,21 +19,23 @@ const getRandomNote = async (callback) => {
 
 
 
-const MainScreen = ({note:note_from_notification}) => {
-    const [note, setNote] = useState(note_from_notification)
+const MainScreen = () => {
+    const [note, setNote] = useState({})
+
+    useNotificationNote(setNote)
+
 
     useEffect(() => {
-        if (!note_from_notification)
             getRandomNote((json) => {
-                setNote(json);
+            setNote({ json });
             })
     }, []);
 
-
+    const isNotePresent = JSON.stringify(note) !== '{}'
 
     return (
         <View style={styles.container}>
-            <Note data={note_from_notification} />
+            {isNotePresent && <Note data={note} />}
             <View style={styles.buttons_container}>
                 <Button color='green' title="Next" onPress={() => getRandomNote(setNote)} />
             </View>
