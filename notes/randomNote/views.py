@@ -4,6 +4,7 @@ from django.http import JsonResponse
 from django.conf import settings
 from .serializers import NoteSerializer
 import base64
+from rest_framework.generics import RetrieveAPIView
 
 
 class GetRandomNoteView(views.APIView):
@@ -12,6 +13,9 @@ class GetRandomNoteView(views.APIView):
         serializer = NoteSerializer(randomnote)
         return JsonResponse(serializer.data)
     
+class GetNoteView(RetrieveAPIView):
+    serializer_class = NoteSerializer
+    queryset = Note.objects
 
 
 class ImageListView(views.APIView):

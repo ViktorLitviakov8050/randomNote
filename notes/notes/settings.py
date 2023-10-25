@@ -47,7 +47,8 @@ INSTALLED_APPS = [
     'login',
     'randomNote',
     'corsheaders',
-    'drf_spectacular'
+    'drf_spectacular',
+    'rest_framework',
 ]
 
 MIDDLEWARE = [
