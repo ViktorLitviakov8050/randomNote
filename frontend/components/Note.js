@@ -16,7 +16,7 @@ const getImages = async (callback, id) => {
 };
 
 
-const Note = ({data:note}) => {
+const Note = ({ data: note }) => {
 
     const [images, setImages] = useState([])
 
@@ -45,7 +45,7 @@ const Note = ({data:note}) => {
 
     return (
         <ScrollView contentContainerStyle={styles.scrollable_container}>
-            <Text style={styles.noteText}>{note.title}</Text>
+            <Text style={styles.noteTitle}>{note.title}</Text>
             <Text style={styles.noteText}>{note.text_content}</Text>
             <View style={styles.labels_container}>
                 {labels?.map(label => label)}
@@ -58,6 +58,12 @@ const Note = ({data:note}) => {
 const styles = StyleSheet.create({
     scrollable_container: {
         marginBottom: 30
+    },
+    noteTitle: {
+        fontSize: 36,
+        textAlign: 'center',
+        padding: 20,
+
     },
     noteText: {
         textAlign: 'center',

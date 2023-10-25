@@ -23,9 +23,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     marginTop: 30
-  },
-  header: {
-    fontSize: 56
   }
 });
 
