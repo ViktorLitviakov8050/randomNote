@@ -26,5 +26,5 @@ urlpatterns = [
     path('notes/', include('randomNote.urls')),
     path('', GetRandomNoteView.as_view()),
     path('api/schema/', SpectacularAPIView.as_view(), name='schema'),
-    path('api/schema/docs/', SpectacularSwaggerView.as_view())
+    path('api/schema/docs/', SpectacularSwaggerView.as_view()),
 ]
