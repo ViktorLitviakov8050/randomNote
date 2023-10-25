@@ -30,7 +30,7 @@ const Note = ({ data: note }) => {
             <Image
                 key={image}
                 style={{ height: 300, width: 500 }}
-                source={{ uri: `data:image/png;base64,${image}` }}
+                source={{ uri: image }}
                 resizeMode='center'
             />
         )
