@@ -1,33 +1,14 @@
 import { View, Image } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import ImagesCarousel from './ImagesCarousel'
-import { API_URL } from "@env"
-
-
-
-const getImages = async (callback, id) => {
-    try {
-        const response = await fetch(
-            `${API_URL}/notes/getimages/${id}`,
-        );
-        const json = await response.json();
-        callback(json.images);
-    } catch (error) {
-        console.error(error);
-    }
-};
+import useAPI from './useAPI'
 
 export default function ImagesSection({ note_id }) {
     const [images, setImages] = useState([]);
-    const [loading, setLoading] = useState(false);
+    const { loading, fetchData } = useAPI(`notes/getimages/${note_id}`, ({ images }) => setImages(images), console.log);
 
     useEffect(() => {
-        setLoading(true)
-        getImages((images) => {
-            setImages(images);
-            setLoading(false);
-        }, note_id)
-
+        fetchData();
     }, [note_id]);
 
     const imagesList = images?.map((image) => {

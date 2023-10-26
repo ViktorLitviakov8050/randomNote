@@ -3,29 +3,16 @@ import React, { useEffect, useState } from 'react'
 import Button from '../components/Button'
 import Note from '../components/Note'
 import useNotificationNote from '../components/useNotificationNote';
-import { API_URL } from "@env"
-
-const getRandomNote = async (callback) => {
-    try {
-        const response = await fetch(
-            `${API_URL}/notes/getrandomnote`,
-        );
-        const json = await response.json();
-        callback(json);
-    } catch (error) {
-        console.error(error);
-    }
-};
+import useAPI from '../components/useAPI';
 
 const MainScreen = () => {
     const [note, setNote] = useState({})
+    const { fetchData } = useAPI(`notes/getrandomnote`, setNote, console.log);
 
     useNotificationNote(setNote)
 
     useEffect(() => {
-        getRandomNote((json) => {
-            setNote(json);
-        })
+        fetchData();
     }, []);
 
     const isNotePresent = JSON.stringify(note) !== '{}'
@@ -34,7 +21,7 @@ const MainScreen = () => {
         <View style={styles.container}>
             {isNotePresent && <Note data={note} />}
             <View style={styles.buttons_container}>
-                <Button color='green' title="Next" onPress={() => getRandomNote(setNote)} />
+                <Button color='green' title="Next" onPress={fetchData} />
             </View>
         </View>
     )
