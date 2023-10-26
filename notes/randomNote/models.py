@@ -46,7 +46,7 @@ class Note(models.Model, JSONSourceable):
     edited_time = models.DateTimeField(null=True)
     created_time = models.DateTimeField(null=True)
     is_archived = models.BooleanField(default=False)
-    labels = models.ManyToManyField(Label)
+    labels = models.ManyToManyField(Label, related_name='notes')
 
     @classmethod
     def random_note(cls):
