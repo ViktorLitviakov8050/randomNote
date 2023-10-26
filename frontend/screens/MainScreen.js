@@ -3,12 +3,12 @@ import React, { useEffect, useState } from 'react'
 import Button from '../components/Button'
 import Note from '../components/Note'
 import useNotificationNote from '../components/useNotificationNote';
-
+import { API_URL } from "@env"
 
 const getRandomNote = async (callback) => {
     try {
         const response = await fetch(
-            'http://192.168.1.91:8000/notes/getrandomnote',
+            `${API_URL}/notes/getrandomnote`,
         );
         const json = await response.json();
         callback(json);
@@ -17,18 +17,15 @@ const getRandomNote = async (callback) => {
     }
 };
 
-
-
 const MainScreen = () => {
     const [note, setNote] = useState({})
 
     useNotificationNote(setNote)
 
-
     useEffect(() => {
-            getRandomNote((json) => {
-            setNote({ json });
-            })
+        getRandomNote((json) => {
+            setNote(json);
+        })
     }, []);
 
     const isNotePresent = JSON.stringify(note) !== '{}'
@@ -57,6 +54,4 @@ const styles = StyleSheet.create({
 
 })
 
-export default MainScreen
-
-
+export default MainScreen;
