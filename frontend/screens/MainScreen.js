@@ -2,8 +2,8 @@ import { View, StyleSheet } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import Button from '../components/Button'
 import Note from '../components/Note'
-import useNotificationNote from '../components/useNotificationNote';
-import useAPI from '../components/useAPI';
+import useNotificationNote from '../hooks/useNotificationNote';
+import useAPI from '../hooks/useAPI';
 
 const MainScreen = () => {
     const [note, setNote] = useState({})

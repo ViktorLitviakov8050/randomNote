@@ -1,7 +1,7 @@
 import { View, Image } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import ImagesCarousel from './ImagesCarousel'
-import useAPI from './useAPI'
+import useAPI from '../hooks/useAPI'
 
 export default function ImagesSection({ note_id }) {
     const [images, setImages] = useState([]);

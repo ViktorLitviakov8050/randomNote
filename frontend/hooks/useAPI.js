@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { API_URL } from "@env";
 
 const useAPI = (endpoint, onSuccess, onError) => {
