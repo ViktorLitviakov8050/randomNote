@@ -147,5 +147,7 @@ REST_FRAMEWORK = {
 }
 
 SPECTACULAR_SETTINGS = {
-    'TITLE': 'RandomNote API Docs'
+    'TITLE': 'RandomNote API Docs',
+    'VERSION': '1.0.0',
+    'DESCRIPTION': 'API for Random Note project usually consumed by React Native application'
 }
