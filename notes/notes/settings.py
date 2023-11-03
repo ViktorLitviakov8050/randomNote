@@ -139,7 +139,7 @@ load_dotenv()
 SECRET_KEY = os.getenv("KEY").encode()
 
 CORS_ALLOWED_ORIGINS = [
-    'http://localhost:19006',
+    'http://localhost:19000', 'http://localhost:19006'
 ]
 
 REST_FRAMEWORK = {

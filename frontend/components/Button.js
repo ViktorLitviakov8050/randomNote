@@ -4,8 +4,9 @@ import React from 'react'
 const Button = (props) => {
     return (
         <Pressable
+            disabled={props.disabled}
             onPress={props.onPress}
-            style={[styles.button, { backgroundColor: props?.color }]}
+            style={[styles.button, { backgroundColor: props?.color, opacity:props.disabled ? 0.5 :1 }]}
         >
             <Text style={styles.buttonText}>
                 {props?.title}
