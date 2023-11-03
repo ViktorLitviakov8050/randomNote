@@ -35,7 +35,7 @@ def send_note_as_notification(note):
     return response.status_code == 200
 
 
-def sent_random_note():
+def send_random_note():
   random_note = Note.random_note()
   send_note_as_notification(random_note)
   print(random_note.id)
