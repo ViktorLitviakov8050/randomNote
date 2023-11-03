@@ -15,7 +15,7 @@ django.setup()
 from randomNote.models import Note
 from randomNote.serializers import NoteSerializer
 
-NATIVE_NOTIFY_URL = "https://exp.host/--/api/v2/push/send"
+EXPO_NOTIFICATIONS_SERVER_URL = "https://exp.host/--/api/v2/push/send"
 APP_ID = 13004
 APP_TOKEN = "ExponentPushToken[KxFK2yJZNXIDFQzPrU5MCi]"
              
